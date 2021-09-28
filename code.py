@@ -2,8 +2,10 @@ import pgzrun
 import pygame
 from random import randint
 
-width = 800
-height = 600
+#width = 800
+#height = 600
+WIDTH = 800
+HEIGHT = 600
 
 balloon = Actor("balloon")
 balloon.pos = 400,300
@@ -77,7 +79,7 @@ def flap():
         bird_up = False
     else:
         bird.image = "bird-up"
-        bird.up = True
+        bird_up = True
 
 def update():
     global game_over, score , number_of_updates
