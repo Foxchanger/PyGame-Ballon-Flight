@@ -83,4 +83,41 @@ def update():
     global game_over, score , number_of_updates
     if not game_over:
         if not up:
-            balloon.y += 1                               
+            balloon.y += 1   
+
+    if bird.x > 0:
+        bird.x -= 4
+        if number_of_updates == 9:
+            flap()
+            number_of_updates = 0
+        else:
+            number_of_updates += 1
+    else:
+        bird.x = randint(800,1600)
+        bird.y = randint(10,200)
+        score += 1
+        number_of_updates =0
+
+    if house.right >0:
+        house.x -=2
+    else:
+        house.x = randint (800,1600)
+        score += 2
+
+    if tree.right > 0:
+        tree.x -= 2
+    else:
+        tree.x = randint (800, 1600)
+        score += 1   
+
+    if balloon.top <0 or balloon.botoom > 560:
+        game_over = True
+        update_high_scores()
+
+    if balloon.collidepoint(bird.x, bird.y) or \
+        balloon.colliderpoint(tree.x,tree.y) or \
+        balloon.colliderpoint(house.x,house.y):
+         game_over = True
+         update_high_scores()    
+
+pgzrun.go()                                                                            
