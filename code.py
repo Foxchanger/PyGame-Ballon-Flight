@@ -1,24 +1,24 @@
-from math import fabs
 import pgzrun
 import pygame
 from random import randint
 
-width =800
+width = 800
 height = 600
-balloon = Actor ("balloon")
+
+balloon = Actor("balloon")
 balloon.pos = 400,300
-bird = Actor ("bird-up")
+bird = Actor("bird-up")
 bird.pos = randint(800,1600), randint(10,200)
 house = Actor("house")
 house.pos = randint(800,1600),460
-tree = Actor ("tree")
+tree = Actor("tree")
 tree.pos = randint(800,1600),450
 
 bird_up = True
 up = False
 game_over = False
 score = 0
-number_of_updates=0
+number_of_updates =0
 
 scores = []
 
@@ -31,8 +31,8 @@ def update_high_scores():
     with open (filename,"r")as file:
         line = file.readline()
         high_scores = line.split()
-        for high_scores in high_scores:
-            if(score >int(high_score)):
+        for high_score in high_scores:
+            if(score > int(high_score)):
                 scores.append(str(score)+ " ")
                 score = int(high_score)
             else:
@@ -85,39 +85,39 @@ def update():
         if not up:
             balloon.y += 1   
 
-    if bird.x > 0:
-        bird.x -= 4
-        if number_of_updates == 9:
-            flap()
-            number_of_updates = 0
+        if bird.x > 0:
+            bird.x -= 4
+            if number_of_updates == 9:
+                flap()
+                number_of_updates = 0
+            else:
+                 number_of_updates += 1
         else:
-            number_of_updates += 1
-    else:
-        bird.x = randint(800,1600)
-        bird.y = randint(10,200)
-        score += 1
-        number_of_updates =0
+             bird.x = randint(800,1600)
+             bird.y = randint(10,200)
+             score += 1
+             number_of_updates =0
 
-    if house.right >0:
-        house.x -=2
-    else:
-        house.x = randint (800,1600)
-        score += 2
+        if house.right >0:
+            house.x -=2
+        else:
+             house.x = randint (800,1600)
+             score += 2
 
-    if tree.right > 0:
-        tree.x -= 2
-    else:
-        tree.x = randint (800, 1600)
-        score += 1   
+        if tree.right > 0:
+           tree.x -= 2
+        else:
+             tree.x = randint (800, 1600)
+             score += 1   
 
-    if balloon.top <0 or balloon.botoom > 560:
-        game_over = True
-        update_high_scores()
+        if balloon.top <0 or balloon.bottom > 560:
+            game_over = True
+            update_high_scores()
 
-    if balloon.collidepoint(bird.x, bird.y) or \
-        balloon.colliderpoint(tree.x,tree.y) or \
-        balloon.colliderpoint(house.x,house.y):
-         game_over = True
-         update_high_scores()    
+        if balloon.collidepoint(bird.x, bird.y) or \
+            balloon.collidepoint(tree.x,tree.y) or \
+            balloon.collidepoint(house.x,house.y):
+                game_over = True
+                update_high_scores()    
 
 pgzrun.go()                                                                            
